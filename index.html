@@ -661,35 +661,35 @@ html, body {
 /* Image-only slides */
 .card.--img-only {
   display: flex !important; flex-direction: column; align-items: center; justify-content: center;
-  padding: 0.8rem 1.2rem;
+  padding: 1rem 5% 0.5rem;
   background: rgba(6,6,18,0.92);
   backdrop-filter: none; -webkit-backdrop-filter: none;
   border: 1px solid rgba(255,255,255,0.08);
+  gap: 0.4rem;
+  overflow: hidden;
 }
 .card.--img-only .card-text { display: none !important; }
 .card.--img-only .card-img {
-  width: 100%; flex: 1; min-height: 0;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  flex: 0 1 auto; max-height: calc(100% - 4rem);
+  display: flex; align-items: center; justify-content: center;
   padding: 0; border: none; border-radius: 0;
-  box-shadow: none; background: transparent; height: auto;
+  box-shadow: none; background: transparent;
   clip-path: none !important; opacity: 0; transform: none;
   transition: opacity 0.8s var(--ease-out-expo);
 }
 .card.--img-only .card-img.--in { opacity: 1; clip-path: none !important; transform: none; }
 .card.--img-only .card-img img {
   display: block;
-  width: auto; max-width: 100%; height: auto;
-  max-height: 100%;
+  max-width: 100%; max-height: 100%;
   object-fit: contain;
   border-radius: 12px;
-  background: rgba(12,12,28,0.95);
   box-shadow: 0 4px 30px rgba(0,0,0,0.35), 0 0 60px rgba(108,92,231,0.08);
   image-rendering: auto;
   -ms-interpolation-mode: bicubic;
 }
 .card.--img-only .card-img__caption {
   font-size: 0.72rem; color: rgba(240,240,248,0.55);
-  padding-top: 0.5rem; text-align: center;
+  padding-top: 0.3rem; text-align: center;
   letter-spacing: 0.02em; flex-shrink: 0;
 }
 .card.--img-only .card-img-stack {
@@ -1074,6 +1074,73 @@ html, body {
 }
 
 /* ============================================
+   TECH STACK BADGES
+   ============================================ */
+.tech-stack {
+  width: 100%; text-align: center;
+  flex-shrink: 0;
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+}
+.tech-stack.--in { opacity: 1; transform: translateY(0); }
+.tech-stack__label {
+  display: inline-block;
+  font-family: var(--font-mono); font-size: 0.6rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(240,240,248,0.4);
+  margin-bottom: 0.6rem;
+  padding: 0.2rem 0.7rem; border-radius: 100px;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+}
+.tech-stack__items {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;
+}
+.tech-chip {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.45rem 1rem 0.45rem 0.75rem;
+  border-radius: 100px;
+  background: var(--chip-bg);
+  border: 1px solid color-mix(in srgb, var(--chip-color) 20%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  opacity: 0; transform: translateY(10px) scale(0.9);
+  transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo),
+              border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+.tech-chip.--in {
+  opacity: 1; transform: translateY(0) scale(1);
+}
+.tech-chip:hover {
+  border-color: color-mix(in srgb, var(--chip-color) 50%, transparent);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--chip-color) 15%, transparent),
+              inset 0 0 12px color-mix(in srgb, var(--chip-color) 5%, transparent);
+  transform: translateY(-2px) scale(1.04);
+}
+.tech-chip__dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  background: var(--chip-color);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--chip-color) 60%, transparent);
+  animation: techDotPulse 2s ease-in-out infinite alternate;
+  animation-delay: calc(var(--chip-i) * 0.3s);
+}
+@keyframes techDotPulse {
+  0%   { box-shadow: 0 0 6px color-mix(in srgb, var(--chip-color) 40%, transparent); transform: scale(1); }
+  100% { box-shadow: 0 0 14px color-mix(in srgb, var(--chip-color) 70%, transparent); transform: scale(1.2); }
+}
+.tech-chip__name {
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em;
+  color: var(--chip-color);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--chip-color) 25%, transparent);
+}
+
+@media (max-width: 768px) {
+  .tech-stack__items { gap: 0.4rem; }
+  .tech-chip { padding: 0.35rem 0.8rem 0.35rem 0.6rem; }
+  .tech-chip__name { font-size: 0.7rem; }
+  .tech-chip__dot { width: 6px; height: 6px; }
+}
+
+/* ============================================
    THANK YOU SLIDE
    ============================================ */
 .card.--thankyou {
@@ -1277,7 +1344,8 @@ html, body {
   .hero-aurora, .hero-orbits, .hero-cursor, .hero-sparkles, .hero-scanline, .hero-noise, .hero-title-shimmer { display: none !important; }
   .step-label, .step-title, .step-subtitle, .card-body p, .card-bullets li, .metric, .card-img, .card-footer-note,
   .ty-emoji, .ty-title, .ty-message, .ty-sep, .ty-team,
-  .arch-line, .arch-node, .arch-branch, .arch-hex, .arch-pulse, .arch-ring, .arch-glow { opacity: 1 !important; transform: none !important; clip-path: none !important; filter: none !important; }
+  .arch-line, .arch-node, .arch-branch, .arch-hex, .arch-pulse, .arch-ring, .arch-glow,
+  .tech-stack, .tech-chip { opacity: 1 !important; transform: none !important; clip-path: none !important; filter: none !important; }
   .page-transition { display: none !important; }
   .cursor-light, .ripple-layer { display: none !important; }
 }
@@ -1393,15 +1461,11 @@ const contentFlow = [
     title: "Problem Statement",
     subtitle: "Rising shipping costs threaten margins",
     body: [
-      "Converse currently fulfills most online orders through <strong>Ship\u2011to\u2011Me</strong>, resulting in high and steadily increasing shipping costs",
-      "In 2025, Converse spent over <strong>$7.29 million</strong> on shipping alone \u2014 averaging <strong>~$19,988 per day</strong> \u2014 with costs trending upward throughout the year",
-      "In the last 30 days (Feb 23 \u2013 Mar 24, 2026), shipping costs reached <strong>$238,182</strong> at an average of <strong>$7,939 per day</strong>",
-      "This cost is primarily driven by shipping products from the warehouse to customers using carriers such as <strong>UPS</strong> for every Ship\u2011to\u2011Me order",
-      "As online order volume continues to grow, delivery cost increases <strong>linearly</strong>, directly impacting overall margins"
-    ],
-    images: [
-      { src: "shipping-dashboard-annual.png", alt: "2025 Annual Shipping — $7.29M total (Jan–Dec 2025)" },
-      { src: "shipping-dashboard.png", alt: "30-Day Shipping — $238K (Feb 23 – Mar 24, 2026)" }
+      "Converse currently fulfills most online orders through the <strong>Ship\u2011to\u2011Me</strong> model, leading to high and steadily increasing shipping costs. A significant portion of the orders qualify for free Ship\u2011to\u2011Me, creating a growing cost burden as every order is fulfilled from the warehouse using paid carrier services.",
+      "At the same time, store inventory remains <strong>under\u2011utilized</strong>, forcing frequent markdowns and discounted pricing to clear excess stock, which directly impacts <strong>gross margins</strong>.",
+      "This fulfillment approach also affects <strong>customer experience</strong>. Ship\u2011to\u2011Me orders often have longer delivery timelines, even when the same product is already available in a nearby store\u2014reducing customer satisfaction and speed to purchase.",
+      "Additionally, returns are handled only through warehouse shipments, increasing <strong>reverse\u2011logistics costs</strong> and delaying refunds, despite stores being better positioned to support faster in\u2011person returns.",
+      "As online order volume continues to grow, delivery costs increase <strong>linearly</strong>, directly impacting overall margins and long\u2011term scalability."
     ],
     theme: { accent: "#e84393", accentSecondary: "#fd79a8", accentGlow: "rgba(232,67,147,0.3)" }
   },
@@ -1409,11 +1473,12 @@ const contentFlow = [
     title: "Proposed Solution",
     subtitle: "Introducing BOPIS & BORIS to reduce shipping and delivery costs",
     body: [
-      "To tackle escalating shipping and return costs, we propose launching <strong>BOPIS</strong> (Buy Online, Pick Up In Store) and <strong>BORIS</strong> (Buy Online, Return In Store)\u2014turning our physical stores into a strategic cost\u2011saving advantage",
-      "<strong>BOPIS</strong> removes last\u2011mile delivery entirely by allowing customers to order online and collect from nearby stores, keeping <strong>Ship\u2011to\u2011Store free</strong> while maintaining existing Ship\u2011to\u2011Me pricing",
-      "<strong>BORIS</strong> cuts reverse\u2011logistics costs by enabling in\u2011store returns, delivering <strong>faster refunds</strong> to customers and putting returned inventory back on shelves <strong>immediately</strong>",
-      "Even a modest shift of <strong>10%</strong> of online orders to BOPIS or BORIS translates to around <strong>3,850 orders per month</strong> with zero delivery or return shipping costs",
-      "This shift drives <strong>~$23,000 in savings every 30 days</strong>, or nearly <strong>~$280,000 annually</strong>, all without raising prices or compromising the customer experience"
+      "To tackle escalating shipping and return costs, we propose launching <strong>BOPIS</strong> (Buy Online, Pick Up In Store) and <strong>BORIS</strong> (Buy Online, Return In Store)\u2014turning physical stores into a strategic <strong>cost\u2011saving</strong> and <strong>experience\u2011driven</strong> asset.",
+      "<strong>BOPIS</strong> eliminates last\u2011mile delivery costs by allowing customers to order online and pick up from nearby stores, while keeping <strong>Ship\u2011to\u2011Store free</strong> and maintaining existing Ship\u2011to\u2011Me pricing options.",
+      "<strong>BORIS</strong> reduces reverse\u2011logistics costs by enabling in\u2011store returns, resulting in <strong>faster refunds</strong> for customers and quicker resale of returned inventory.",
+      "These capabilities improve <strong>inventory utilization</strong> by leveraging store stock to fulfill online demand, reducing excess inventory and minimizing the need for markdowns and discounts.",
+      "<strong>BOPIS</strong> and <strong>BORIS</strong> also enhance <strong>customer experience</strong> by offering faster access to products, flexible fulfillment options, and simpler returns\u2014driving higher satisfaction and repeat purchases.",
+      "Overall, this omnichannel approach reduces <strong>operational costs</strong>, protects margins, and scales efficiently as online order volumes continue to grow."
     ],
     theme: { accent: "#00b894", accentSecondary: "#55efc4", accentGlow: "rgba(0,184,148,0.3)" }
   },
@@ -1421,6 +1486,14 @@ const contentFlow = [
     title: "End\u2011to\u2011End Architecture",
     subtitle: "BOPIS & BORIS \u2014 Omnichannel customer experience flow",
     image: { src: "bopis-boris-arch.png", alt: "BOPIS & BORIS \u2014 End-to-End Customer Experience Architecture" },
+    techStack: [
+      { name: "React", color: "#61DAFB", bg: "rgba(97,218,251,0.1)" },
+      { name: "Node.js", color: "#68A063", bg: "rgba(104,160,99,0.1)" },
+      { name: "Express.js", color: "#F5F5F5", bg: "rgba(245,245,245,0.06)" },
+      { name: "MongoDB", color: "#4DB33D", bg: "rgba(77,179,61,0.1)" },
+      { name: "HTML5", color: "#E44D26", bg: "rgba(228,77,38,0.1)" },
+      { name: "CSS3", color: "#2965F1", bg: "rgba(41,101,241,0.1)" }
+    ],
     theme: { accent: "#6c5ce7", accentSecondary: "#a29bfe", accentGlow: "rgba(108,92,231,0.3)" }
   },
   {
@@ -1843,6 +1916,18 @@ const Engine = (() => {
     return `<div class="arch-deco arch-deco--l">${side()}</div><div class="arch-deco arch-deco--r">${side()}</div>`;
   }
 
+  function techStackHTML(stack) {
+    let h = '<div class="tech-stack"><span class="tech-stack__label">Tech Stack</span><div class="tech-stack__items">';
+    stack.forEach((t, i) => {
+      h += `<div class="tech-chip" style="--chip-color:${t.color};--chip-bg:${t.bg};--chip-i:${i}">`;
+      h += `<span class="tech-chip__dot"></span>`;
+      h += `<span class="tech-chip__name">${t.name}</span>`;
+      h += `</div>`;
+    });
+    h += '</div></div>';
+    return h;
+  }
+
   function html(step) {
     if (step.type === 'thankyou') return tyHTML();
     const hasImg = step.image || step.images;
@@ -1870,6 +1955,7 @@ const Engine = (() => {
     } else if (step.image) {
       h += `<div class="card-img"><img src="${step.image.src}" alt="${step.image.alt}" loading="lazy"/>${step.image.alt ? `<div class="card-img__caption">${step.image.alt}</div>` : ''}</div>`;
     }
+    if (step.techStack) h += techStackHTML(step.techStack);
     return h;
   }
 
@@ -1884,6 +1970,8 @@ const Engine = (() => {
     sCard.querySelectorAll('.metric').forEach(m => { setTimeout(() => { m.classList.add('--in'); const v = m.querySelector('.metric__val'); if (v) countUp(v); }, d); d += 100; });
     sCard.querySelectorAll('.card-footer-note').forEach(n => { setTimeout(() => n.classList.add('--in'), d); d += 80; });
     sCard.querySelectorAll('.card-img').forEach(img => { setTimeout(() => img.classList.add('--in'), d); d += 150; });
+    sCard.querySelectorAll('.tech-stack').forEach(el => { setTimeout(() => el.classList.add('--in'), d); d += 80; });
+    sCard.querySelectorAll('.tech-chip').forEach(el => { setTimeout(() => el.classList.add('--in'), d); d += 100; });
     /* Staggered entrance for architecture side decorations */
     let dd = 200;
     sCard.querySelectorAll('.arch-glow').forEach(e => { setTimeout(() => e.classList.add('--in'), dd); dd += 100; });
